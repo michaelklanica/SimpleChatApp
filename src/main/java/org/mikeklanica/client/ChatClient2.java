@@ -4,11 +4,11 @@ import java.net.*;
 public class ChatClient2 {
     public static void main(String[] args) {
         try {
-            // Connect to the server running on the localhost at post 12345
-            Socket socket =  new Socket("localhost", 12345);
+            // Connect to the server running on localhost at port 12345
+            Socket socket = new Socket("localhost", 12345);
 
             // Create input and output streams for communication with the server
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
             // Read the user's name from the console
@@ -19,16 +19,23 @@ public class ChatClient2 {
             // Send a message to the server indicating that this client has joined
             out.println(name + " has joined the chat.");
 
+            // Start a separate thread to continuously listen for messages from the server
+            Thread messageReceiver = new Thread(() -> {
+                try {
+                    String serverMessage;
+                    while ((serverMessage = serverIn.readLine()) != null) {
+                        System.out.println(serverMessage);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            messageReceiver.start();
+
+            // Allow the user to send messages to the server
             System.out.println("Start chatting (Type 'exit' to quit).");
             String message;
             while (true) {
-                // Read messages from the server and display them to the user
-                String serverMessage = in.readLine();
-                if (serverMessage != null) {
-                    System.out.println(serverMessage);
-                }
-
-                // Read messages from the console and send them to the server
                 message = consoleInput.readLine();
                 if (message.equalsIgnoreCase("exit")) {
                     break;
