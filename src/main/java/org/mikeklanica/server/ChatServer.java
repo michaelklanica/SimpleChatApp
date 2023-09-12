@@ -13,7 +13,7 @@ public class ChatServer {
 
         try{
             //Create the ServerSocket and bind it to port 12345
-            serverSocket = new ServerSocket(12345);
+            serverSocket = new ServerSocket(12345, 0, InetAddress.getByName("0.0.0.0"));
 
             while (true) {
                 // Accept incoming client connections and start a new thread to handle each client

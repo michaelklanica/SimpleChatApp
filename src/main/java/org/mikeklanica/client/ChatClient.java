@@ -7,7 +7,8 @@ public class ChatClient {
     public static void main(String[] args) {
         try {
             // Connect to the server running on localhost at port 12345
-            Socket socket = new Socket("localhost", 12345);
+            Socket socket = new Socket("YOUR-HOST-IP-ADDRESS", 12345);
+
 
             // Create input and output streams for communication with the server
             BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
