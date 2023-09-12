@@ -1,7 +1,7 @@
 package org.mikeklanica.client;
 import java.io.*;
 import java.net.*;
-public class ChatClient {
+public class ChatClient2 {
     public static void main(String[] args) {
         try {
             // Connect to the server running on the localhost at post 12345
